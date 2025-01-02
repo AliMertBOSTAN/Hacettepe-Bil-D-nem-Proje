@@ -4,6 +4,8 @@ import time
 import math
 import matplotlib.pyplot as plt
 
+sift = cv2.SIFT_create(contrastThreshold=0.08, edgeThreshold=4)
+
 def grayscale(_img):
     gray_image = cv2.cvtColor(_img, cv2.COLOR_BGR2GRAY)
     thresh = cv2.threshold(gray_image, 240, 255, cv2.THRESH_BINARY)[1]
@@ -11,11 +13,23 @@ def grayscale(_img):
     return thresh
 
 def findPoints(thresh):
-    sift = cv2.SIFT_create(contrastThreshold=0.08, edgeThreshold=4)
-    kp = sift.detect(thresh, None)
+    # kp = sift.detect(thresh, None)
     # img = cv2.drawKeypoints(thresh, kp, thresh, flags=cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+    gray = cv2.cvtColor(thresh, cv2.COLOR_BGR2GRAY)
+    _, thresh = cv2.threshold(gray, 240, 255, cv2.THRESH_BINARY)
+    contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     
-    return kp
+    points = []
+    for contour in contours:
+        area = cv2.contourArea(contour)
+        if 10 < area < 500:
+            M = cv2.moments(contour)
+            if M["m00"] > 0:
+                cx = int(M["m10"] / M["m00"])
+                cy = int(M["m01"] / M["m00"])
+                points.append((cx, cy))
+
+    return points
 
 def findAngle(kp1, kp2, kp3):
     x1, y1 = kp1.pt
@@ -51,20 +65,43 @@ def apply_threshold(angles, threshold=3):
 
     return filtered_angles
 
-def draw_keypoints_with_labels(img, keypoints):
+def match_keypoints(des_prev, des_curr):
+    bf = cv2.BFMatcher(cv2.NORM_L2, crossCheck=True)
+    matches = bf.match(des_prev, des_curr)
+    matches = sorted(matches, key=lambda x: x.distance)
+    return matches
+
+def draw_keypoints_with_labels(img, keypoints, matches=None, prev_kp=None):
     labeled_img = img.copy()
     for i, kp in enumerate(keypoints):
         x, y = int(kp.pt[0]), int(kp.pt[1])
         label = f"kp{i}"
-        cv2.circle(labeled_img, (x, y), 5, (0, 255, 0), -1)  # Keypoint'leri çiz
+        cv2.circle(labeled_img, (x, y), 5, (0, 255, 0), -1)
         cv2.putText(labeled_img, label, (x + 10, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 1)  # Etiket ekle
+
+    if matches and prev_kp:
+        for match in matches:
+            pt1 = (int(prev_kp[match.queryIdx].pt[0]), int(prev_kp[match.queryIdx].pt[1]))
+            pt2 = (int(keypoints[match.trainIdx].pt[0]), int(keypoints[match.trainIdx].pt[1]))
+            cv2.line(labeled_img, pt1, pt2, (0, 255, 255), 2)
     return labeled_img
+
+def findKeypointsAndDescriptors(thresh):
+    kp, des = sift.detectAndCompute(thresh, None)
+    return kp, des
+
+def match_keypoints(des_prev, des_curr):
+    bf = cv2.BFMatcher(cv2.NORM_L2, crossCheck=True)
+    matches = bf.match(des_prev, des_curr)
+    matches = sorted(matches, key=lambda x: x.distance)
+    return matches
 
 def main():
     cap = cv2.VideoCapture('./basket.mp4')
     pTime = 0
     angles = []
     frame_count = 0
+    prev_kp, prev_des = None, None
 
     while cap.isOpened():
         cTime = time.time()
@@ -84,12 +121,16 @@ def main():
         cv2.rectangle(img, (0,0), (100,150), (0, 0, 0), -1)
         cv2.rectangle(img, (w,h) , (0,h-433), (0, 0, 0), -1)
         cv2.rectangle(img, (0,0) , (w,45), (0, 0, 0), -1)
-        cv2.putText(img, f'FPS: {int(fps)}', (20, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+        # cv2.putText(img, f'FPS: {int(fps)}', (20, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
         thres = grayscale(img)
-        keypoints = findPoints(thres)
+        keypoints, descriptors = findKeypointsAndDescriptors(thres)
 
-        labeled_img = draw_keypoints_with_labels(thres, keypoints)
-        cv2.imshow("Keypoints", labeled_img)
+        matches = None
+        if prev_des is not None and descriptors is not None:
+            matches = match_keypoints(prev_des, descriptors)
+
+        labeled_img = draw_keypoints_with_labels(thres, keypoints, matches, prev_kp)
+        cv2.imshow("Keypoints and Matches", thres)
 
         unique_kps = []
         for kp in keypoints:
@@ -97,21 +138,20 @@ def main():
                 unique_kps.append(kp)
 
         if len(unique_kps) >= 4:
-            angle = findAngle(unique_kps[1], unique_kps[2], unique_kps[3])
+            angle = findAngle(unique_kps[0], unique_kps[1], unique_kps[2])
             if angle is not None:
-                angles.append(angle)  # Açıları kaydet
+                angles.append(angle)
                 print(f"Frame {frame_count}: Açı: {angle:.2f} derece")
-            
             frame_count += 1
-            
-        # cv2.imshow("Point Detction", thres)
+
+        prev_kp, prev_des = keypoints, descriptors
+
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
 
     cap.release()
     cv2.destroyAllWindows()
-
-    thresholded_angles = apply_threshold(angles, threshold=3)
-
-
+    thresholded_angles = apply_threshold(angles, threshold=25)
     plt.figure(figsize=(10, 6))
     plt.plot(angles, label="Açı Değerleri", linewidth=2)
     plt.plot(thresholded_angles, label="Thresholded Açı Değerleri", linewidth=2, linestyle='--')
@@ -124,5 +164,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-    
