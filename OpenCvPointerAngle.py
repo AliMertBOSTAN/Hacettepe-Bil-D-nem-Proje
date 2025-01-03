@@ -121,7 +121,6 @@ def main():
         cv2.rectangle(img, (0,0), (100,150), (0, 0, 0), -1)
         cv2.rectangle(img, (w,h) , (0,h-433), (0, 0, 0), -1)
         cv2.rectangle(img, (0,0) , (w,45), (0, 0, 0), -1)
-        # cv2.putText(img, f'FPS: {int(fps)}', (20, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
         thres = grayscale(img)
         keypoints, descriptors = findKeypointsAndDescriptors(thres)
 
@@ -130,6 +129,7 @@ def main():
             matches = match_keypoints(prev_des, descriptors)
 
         labeled_img = draw_keypoints_with_labels(thres, keypoints, matches, prev_kp)
+        cv2.putText(thres, f'FPS: {int(fps)}', (20, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
         cv2.imshow("Keypoints and Matches", thres)
 
         unique_kps = []

@@ -1,15 +1,12 @@
 
 
 ---------------------------------------------------------------------
-Processing demo.mp4
-On Thursday 07. November 2024, 20:15:22
+Processing basket.mp4
+On Thursday 02. January 2025, 21:03:33
 ---------------------------------------------------------------------
 
 
 ---------------------------------------------------------------------
-Processing webcam
-On Thursday 07. November 2024, 20:16:57
+Processing basket.mp4
+On Thursday 02. January 2025, 21:41:02
 ---------------------------------------------------------------------
-Webcam input: the framerate may vary. If results are filtered, Sports2D will use the average framerate as input.
-
-No valid CUDA installation found: using OpenVINO backend with CPU.
