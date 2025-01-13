@@ -50,7 +50,7 @@ def findAngle(kp1, kp2, kp3):
     if mag1 == 0 or mag2 == 0:
         return 0  
     
-    cos_angle = max(-1, min(1, dot_prod / (mag1 * mag2)))
+    cos_angle = max(-1, min(1, dot_prod / (mag1 * mag2))) #negatif açı gelebilr
     angle = math.degrees(math.acos(cos_angle))
     return angle
 
@@ -101,6 +101,7 @@ def main():
     pTime = 0
     angles = []
     frame_count = 0
+    fps_values = []  # FPS değerlerini saklamak için liste
     prev_kp, prev_des = None, None
 
     while cap.isOpened():
@@ -114,6 +115,7 @@ def main():
             break
 
         fps = 1 / (cTime - pTime)
+        fps_values.append(fps)  # FPS değerini listeye ekle
         pTime = cTime
 
         h, w, c = img.shape
@@ -158,6 +160,16 @@ def main():
     plt.title("Video Boyunca Açı Değişimi", fontsize=16)
     plt.xlabel("Frame Sayısı", fontsize=14)
     plt.ylabel("Açı (Derece)", fontsize=14)
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+
+     # FPS grafiği
+    plt.figure(figsize=(12, 6))
+    plt.plot(fps_values, label="FPS Değerleri", linewidth=2, color='orange')
+    plt.title("Video Boyunca FPS Değişimi", fontsize=16)
+    plt.xlabel("Frame Sayısı", fontsize=14)
+    plt.ylabel("FPS", fontsize=14)
     plt.legend()
     plt.grid(True)
     plt.show()

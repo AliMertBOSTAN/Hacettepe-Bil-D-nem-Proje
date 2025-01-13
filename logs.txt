@@ -1,15 +1,75 @@
 
 
 ---------------------------------------------------------------------
-Processing demo.mp4
-On Thursday 07. November 2024, 20:15:22
+Processing basket.mp4
+On Thursday 09. January 2025, 19:38:17
 ---------------------------------------------------------------------
-
-
----------------------------------------------------------------------
-Processing webcam
-On Thursday 07. November 2024, 20:16:57
----------------------------------------------------------------------
-Webcam input: the framerate may vary. If results are filtered, Sports2D will use the average framerate as input.
 
 No valid CUDA installation found: using OpenVINO backend with CPU.
+
+Pose tracking set up for BodyWithFeet model in balanced mode.
+Persons are detected every 4 frames and tracked inbetween. Multi-person is selected.
+Parameters: keypoint_likelihood_threshold=0.3, average_likelihood_threshold=0.5, keypoint_number_threshold=0.3
+
+Processing video stream...
+Video processing completed.
+Processed video saved to C:\Users\Ali Mert BOSTAN\Desktop\Yazýlým\Hacettepe-Bil-D-nem-Proje\basket_Sports2D\basket_Sports2D.mp4.
+Processed images saved to C:\Users\Ali Mert BOSTAN\Desktop\Yazýlým\Hacettepe-Bil-D-nem-Proje\basket_Sports2D\basket_Sports2D_img.
+
+Post-processing pose:
+- Person 0: Interpolating missing sequences if they are smaller than 10 frames. Large gaps filled with last_value.
+Filtering with Butterworth filter, 4th order, 6 Hz.
+Pose in pixels saved to C:\Users\Ali Mert BOSTAN\Desktop\Yazýlým\Hacettepe-Bil-D-nem-Proje\basket_Sports2D\basket_Sports2D_px_person00.trc.
+
+Converting pose to meters:
+
+
+---------------------------------------------------------------------
+Processing basket.mp4
+On Thursday 09. January 2025, 19:39:00
+---------------------------------------------------------------------
+
+No valid CUDA installation found: using OpenVINO backend with CPU.
+
+Pose tracking set up for BodyWithFeet model in balanced mode.
+Persons are detected every 4 frames and tracked inbetween. Multi-person is selected.
+Parameters: keypoint_likelihood_threshold=0.3, average_likelihood_threshold=0.5, keypoint_number_threshold=0.3
+
+Processing video stream...
+Video processing completed.
+Processed video saved to C:\Users\Ali Mert BOSTAN\Desktop\Yazýlým\Hacettepe-Bil-D-nem-Proje\basket_Sports2D\basket_Sports2D.mp4.
+Processed images saved to C:\Users\Ali Mert BOSTAN\Desktop\Yazýlým\Hacettepe-Bil-D-nem-Proje\basket_Sports2D\basket_Sports2D_img.
+
+Post-processing pose:
+- Person 0: Interpolating missing sequences if they are smaller than 10 frames. Large gaps filled with last_value.
+Filtering with Butterworth filter, 4th order, 6 Hz.
+Pose in pixels saved to C:\Users\Ali Mert BOSTAN\Desktop\Yazýlým\Hacettepe-Bil-D-nem-Proje\basket_Sports2D\basket_Sports2D_px_person00.trc.
+
+Post-processing angles:
+- Person 0: Interpolating missing sequences if they are smaller than 10 frames. Large gaps filled with last_value.
+Filtering with Butterworth filter, 4th order, 6 Hz.
+Angles saved to C:\Users\Ali Mert BOSTAN\Desktop\Yazýlým\Hacettepe-Bil-D-nem-Proje\basket_Sports2D\basket_Sports2D_angles_person00.mot.
+
+Processing basket.mp4 took 157.37 s.
+
+
+---------------------------------------------------------------------
+Processing basket.mp4
+On Thursday 09. January 2025, 20:35:02
+---------------------------------------------------------------------
+
+No valid CUDA installation found: using OpenVINO backend with CPU.
+
+Pose tracking set up for BodyWithFeet model in balanced mode.
+Persons are detected every 4 frames and tracked inbetween. Multi-person is selected.
+Parameters: keypoint_likelihood_threshold=0.3, average_likelihood_threshold=0.5, keypoint_number_threshold=0.3
+
+Processing video stream...
+Video processing completed.
+Processed video saved to C:\Users\Ali Mert BOSTAN\Desktop\Yazýlým\Hacettepe-Bil-D-nem-Proje\basket_Sports2D\basket_Sports2D.mp4.
+Processed images saved to C:\Users\Ali Mert BOSTAN\Desktop\Yazýlým\Hacettepe-Bil-D-nem-Proje\basket_Sports2D\basket_Sports2D_img.
+
+Post-processing pose:
+- Person 0: Interpolating missing sequences if they are smaller than 10 frames. Large gaps filled with last_value.
+Filtering with Butterworth filter, 4th order, 6 Hz.
+Pose in pixels saved to C:\Users\Ali Mert BOSTAN\Desktop\Yazýlým\Hacettepe-Bil-D-nem-Proje\basket_Sports2D\basket_Sports2D_px_person00.trc.

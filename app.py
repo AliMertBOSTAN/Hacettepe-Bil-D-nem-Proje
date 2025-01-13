@@ -2,7 +2,7 @@ import mediapipe as mp
 import numpy as np
 import cv2
 import time
-
+import matplotlib.pyplot as plt
 class poseDetector():
     def __init__(self, mode=False, upBody=False, smooth=True, detectionCon=0.75, trackCon=0.75):
         self.mode = mode
@@ -37,9 +37,11 @@ class poseDetector():
         return self.lmList
 
 def main():
-    cap = cv2.VideoCapture(1)
+    cap = cv2.VideoCapture("./basket.mp4")
     pTime = 0
     detector = poseDetector()
+    fps_values = []  # FPS değerlerini saklamak için liste
+
 
     while cap.isOpened():
         success, img = cap.read()
@@ -55,6 +57,8 @@ def main():
 
         fps = 1 / (cTime - pTime)
         pTime = cTime
+        fps_values.append(fps)  # FPS değerini listeye ekle
+
 
         cv2.putText(img, f'FPS: {int(fps)}', (20, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
         cv2.imshow("Pose Detection", img)
@@ -64,6 +68,16 @@ def main():
 
     cap.release()
     cv2.destroyAllWindows()
+
+     # FPS grafiği
+    plt.figure(figsize=(12, 6))
+    plt.plot(fps_values, label="FPS Değerleri", linewidth=2, color='orange')
+    plt.title("Video Boyunca FPS Değişimi", fontsize=16)
+    plt.xlabel("Frame Sayısı", fontsize=14)
+    plt.ylabel("FPS", fontsize=14)
+    plt.legend()
+    plt.grid(True)
+    plt.show()
 
 if __name__ == "__main__":
     main()
