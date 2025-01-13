@@ -2,6 +2,7 @@
 
 ---------------------------------------------------------------------
 Processing basket.mp4
+<<<<<<< HEAD
 On Thursday 09. January 2025, 19:38:17
 ---------------------------------------------------------------------
 
@@ -73,3 +74,13 @@ Post-processing pose:
 - Person 0: Interpolating missing sequences if they are smaller than 10 frames. Large gaps filled with last_value.
 Filtering with Butterworth filter, 4th order, 6 Hz.
 Pose in pixels saved to C:\Users\Ali Mert BOSTAN\Desktop\Yazýlým\Hacettepe-Bil-D-nem-Proje\basket_Sports2D\basket_Sports2D_px_person00.trc.
+=======
+On Thursday 02. January 2025, 21:03:33
+---------------------------------------------------------------------
+
+
+---------------------------------------------------------------------
+Processing basket.mp4
+On Thursday 02. January 2025, 21:41:02
+---------------------------------------------------------------------
+>>>>>>> 4e7e840f546c3bb82f6b26e262dcbb44f8af4c2e

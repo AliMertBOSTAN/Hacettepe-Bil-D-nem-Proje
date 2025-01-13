@@ -1,0 +1,15 @@
+
+
+---------------------------------------------------------------------
+Processing demo.mp4
+On Thursday 07. November 2024, 20:15:22
+---------------------------------------------------------------------
+
+
+---------------------------------------------------------------------
+Processing webcam
+On Thursday 07. November 2024, 20:16:57
+---------------------------------------------------------------------
+Webcam input: the framerate may vary. If results are filtered, Sports2D will use the average framerate as input.
+
+No valid CUDA installation found: using OpenVINO backend with CPU.
