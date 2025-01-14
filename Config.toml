@@ -12,7 +12,7 @@
 
 
 [project]
-video_input = 'webcam' # 'webcam' or '<video_path.ext>', or ['video1_path.mp4', 'video2_path.avi>', ...]. Beware that images won't be saved if paths contain non ASCII characters.
+video_input = ['basket.mp4'] # 'webcam' or '<video_path.ext>', or ['video1_path.mp4', 'video2_path.avi>', ...]. Beware that images won't be saved if paths contain non ASCII characters.
 result_dir = '/Users/alimertbostan/Documents/GitHub/hardhat burte force/Hacettepe-Bil-D-nem-Proje'
 
 # Video parameters
@@ -20,12 +20,12 @@ time_range = [] # [] for the whole video, or [start_time, end_time] (in seconds)
 video_dir = '' # BETWEEN SINGLE QUOTES! # If empty, result dir is current dir
 
 # Webcam parameters
-webcam_id = 1 # your webcam id (0 is default)
-input_size = [1280, 720] # [W, H]. Lower resolution will be faster but less precise.
+# webcam_id = 1 # your webcam id (0 is default)
+# input_size = [1280, 720] # [W, H]. Lower resolution will be faster but less precise.
 
 
 [process]
-multiperson = true # Multiperson involves tracking: will be faster if false
+multiperson = false # Multiperson involves tracking: will be faster if false
 show_realtime_results = true
 save_vid = false
 save_img = false

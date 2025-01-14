@@ -4,6 +4,7 @@ import cv2
 import time
 import math
 import matplotlib.pyplot as plt
+import json
 
 angle = [] 
 
@@ -135,6 +136,9 @@ def main():
     plt.legend()
     plt.grid(True)
     plt.show()
+
+    with open('angles1.json', 'w') as f:
+        json.dump(angle, f)  
 
 if __name__ == "__main__":
     main()

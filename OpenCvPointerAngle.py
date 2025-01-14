@@ -3,6 +3,7 @@ import cv2
 import time
 import math
 import matplotlib.pyplot as plt
+import json
 
 sift = cv2.SIFT_create(contrastThreshold=0.08, edgeThreshold=4)
 
@@ -161,6 +162,10 @@ def main():
     plt.legend()
     plt.grid(True)
     plt.show()
+
+    with open('angles2.json', 'w') as f:
+        json.dump(angles, f)  
+
 
 if __name__ == "__main__":
     main()
